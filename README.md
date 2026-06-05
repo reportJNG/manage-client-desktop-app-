@@ -1,9 +1,34 @@
-# Desktop Login App
+# electron-app
 
-A clean Electron, React, and TypeScript application that starts on a single login page.
+An Electron application with React and TypeScript
 
-## Scripts
+## Recommended IDE Setup
 
-- `npm run dev` starts the app in development mode.
-- `npm run build` typechecks and builds the app.
-- `npm run start` previews the built app.
+- [VSCode](https://code.visualstudio.com/) + [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint) + [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
+
+## Project Setup
+
+### Install
+
+```bash
+$ npm install
+```
+
+### Development
+
+```bash
+$ npm run dev
+```
+
+### Build
+
+```bash
+# For windows
+$ npm run build:win
+
+# For macOS
+$ npm run build:mac
+
+# For Linux
+$ npm run build:linux
+```

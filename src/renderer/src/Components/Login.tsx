@@ -2,7 +2,7 @@ import type { FormEvent } from 'react'
 import { useState } from 'react'
 import { LockKeyhole, User } from 'lucide-react'
 
-function Login(): React.JSX.Element {
+export default function Login(): React.JSX.Element {
   const validUser = 'admin'
   const validPassword = '1234'
 
@@ -20,15 +20,18 @@ function Login(): React.JSX.Element {
 
     if (compareUserAndPassword()) {
       setMessage('Login successful.')
-      return
+    } else {
+      setMessage('Wrong user or password.')
     }
 
-    setMessage('Wrong user or password.')
+    setTimeout(() => {
+      setMessage('')
+    }, 3000)
   }
 
   return (
     <main className="flex min-h-screen items-center justify-center bg-[#c0c0c0] p-4 text-[#111]">
-      <div className="w-[340px] border-2 border-[#808080] bg-[#eeeeee] p-4 shadow-[inset_1px_1px_0_#fff,inset_-1px_-1px_0_#777]">
+      <div className="w-85 border-2 border-[#808080] bg-[#eeeeee] p-4 shadow-[inset_1px_1px_0_#fff,inset_-1px_-1px_0_#777]">
         <div className="mb-4 border border-[#808080] bg-[#0b3d91] px-2 py-1 text-sm font-bold text-white">
           System Login
         </div>
@@ -87,7 +90,7 @@ function Login(): React.JSX.Element {
             </a>
           </div>
 
-          {message && (
+          {message !== '' && (
             <p className="mb-3 border border-[#808080] bg-white px-2 py-1 text-xs" role="status">
               {message}
             </p>
@@ -104,5 +107,3 @@ function Login(): React.JSX.Element {
     </main>
   )
 }
-
-export default Login

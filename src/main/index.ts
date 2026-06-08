@@ -39,21 +39,20 @@ function createWindow(): void {
   }
 }
 
+//one function here to handle creating profiles
 function registerIpcHandlers(): void {
   ipcMain.handle('user:create', (_event, user: CreateUserInput) => {
     try {
-      const createdUser = createUser(user)
+      createUser(user)
 
       return {
         success: true,
-        user: createdUser
+        message: 'Successfully created !'
       }
-    } catch (error) {
-      const message = error instanceof Error ? error.message : 'Failed to create user'
-
+    } catch {
       return {
         success: false,
-        message
+        message: 'Failed to create !'
       }
     }
   })

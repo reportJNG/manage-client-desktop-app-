@@ -1,7 +1,14 @@
-import { app, shell, BrowserWindow } from 'electron'
+import { app, shell, BrowserWindow, ipcMain } from 'electron'
 import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
+import { initDatabase, createUser } from './database'
+
+type CreateUserInput = {
+  username: string
+  password: string
+  age: number
+}
 
 function createWindow(): void {
   const mainWindow = new BrowserWindow({
@@ -32,8 +39,31 @@ function createWindow(): void {
   }
 }
 
+function registerIpcHandlers(): void {
+  ipcMain.handle('user:create', (_event, user: CreateUserInput) => {
+    try {
+      const createdUser = createUser(user)
+
+      return {
+        success: true,
+        user: createdUser
+      }
+    } catch (error) {
+      const message = error instanceof Error ? error.message : 'Failed to create user'
+
+      return {
+        success: false,
+        message
+      }
+    }
+  })
+}
+
 app.whenReady().then(() => {
   electronApp.setAppUserModelId('com.desktop.loginapp')
+
+  initDatabase()
+  registerIpcHandlers()
 
   app.on('browser-window-created', (_, window) => {
     optimizer.watchWindowShortcuts(window)

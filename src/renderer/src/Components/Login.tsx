@@ -74,31 +74,34 @@ export default function Login(): React.JSX.Element {
             />
           </div>
 
-          <div className="mb-4 flex items-center justify-between text-xs">
-            <label className="flex items-center gap-1">
+          <div className="mb-5 flex items-center justify-between text-sm">
+            <label className="flex cursor-pointer items-center gap-2 text-slate-600">
               <input
                 type="checkbox"
                 checked={rememberUser}
                 onChange={(event) => setRememberUser(event.target.checked)}
+                className="h-4 w-4 cursor-pointer rounded border-slate-300 accent-blue-900"
               />
-              Remember
+              <span>Remember me</span>
             </label>
 
-            <div className="mt-4 flex items-center justify-between text-sm">
-              <Link
-                to={'/Forgetpassword'}
-                className="font-medium text-blue-900 underline-offset-4 transition hover:text-blue-700 hover:underline"
-              >
-                Forgot password?
-              </Link>
+            <Link
+              to="/forgetpassword"
+              className="font-medium text-blue-900 underline-offset-4 transition hover:text-blue-700 hover:underline"
+            >
+              Forgot password?
+            </Link>
+          </div>
 
-              <Link
-                to={'/Signup'}
-                className="font-semibold text-blue-900 transition hover:text-blue-700 hover:underline"
-              >
-                Create an account
-              </Link>
-            </div>
+          <div className="mt-5 flex items-center justify-center gap-1 text-sm text-slate-600">
+            <span>Don&apos;t have an account?</span>
+
+            <Link
+              to="/signup"
+              className="font-semibold text-blue-900 underline-offset-4 transition hover:text-blue-700 hover:underline"
+            >
+              Create one
+            </Link>
           </div>
 
           {message !== '' && (

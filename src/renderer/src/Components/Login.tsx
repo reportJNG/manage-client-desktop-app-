@@ -1,11 +1,10 @@
 import type { FormEvent } from 'react'
 import { useState } from 'react'
 import { LockKeyhole, User } from 'lucide-react'
-
+import { Link } from 'react-router-dom'
 export default function Login(): React.JSX.Element {
   const validUser = 'admin'
   const validPassword = '1234'
-
   const [user, setUser] = useState('')
   const [password, setPassword] = useState('')
   const [rememberUser, setRememberUser] = useState(false)
@@ -85,9 +84,21 @@ export default function Login(): React.JSX.Element {
               Remember
             </label>
 
-            <a href="#forgot-password" className="text-[#000080] underline">
-              Forget password?
-            </a>
+            <div className="mt-4 flex items-center justify-between text-sm">
+              <Link
+                to={'/Forgetpassword'}
+                className="font-medium text-blue-900 underline-offset-4 transition hover:text-blue-700 hover:underline"
+              >
+                Forgot password?
+              </Link>
+
+              <Link
+                to={'/Signup'}
+                className="font-semibold text-blue-900 transition hover:text-blue-700 hover:underline"
+              >
+                Create an account
+              </Link>
+            </div>
           </div>
 
           {message !== '' && (

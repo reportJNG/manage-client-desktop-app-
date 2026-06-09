@@ -11,6 +11,9 @@ const api = {
     },
     login: (user: usertype) => {
       return ipcRenderer.invoke('user:login', user)
+    },
+    getallprofiles: () => {
+      return ipcRenderer.invoke('user:getall')
     }
   }
 }

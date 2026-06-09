@@ -2,7 +2,7 @@ import { app, shell, BrowserWindow, ipcMain } from 'electron'
 import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
-import { initDatabase, createUser, loginUser } from './database'
+import Getallprofiles, { initDatabase, createUser, loginUser } from './database'
 import type { usertype } from '../shared/usertypes'
 
 function createWindow(): void {
@@ -70,13 +70,30 @@ function loginIpchandlers(): void {
     }
   })
 }
+//another function just simple get all profiles
+function getallUsersIpchandlers(): void {
+  ipcMain.handle('user:getall', () => {
+    const allusers = Getallprofiles()
+
+    if (!allusers || allusers.length === 0) {
+      return {
+        success: false
+      }
+    } else {
+      return {
+        value: allusers,
+        success: true
+      }
+    }
+  })
+}
 app.whenReady().then(() => {
   electronApp.setAppUserModelId('com.desktop.loginapp')
 
   initDatabase()
   registerIpcHandlers()
   loginIpchandlers()
-
+  getallUsersIpchandlers()
   app.on('browser-window-created', (_, window) => {
     optimizer.watchWindowShortcuts(window)
   })

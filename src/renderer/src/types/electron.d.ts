@@ -14,6 +14,10 @@ type ApiResponse_user = {
   message: string
   value: Userojbect | undefined
 }
+type Apireponse_notxt = {
+  success: boolean
+  value: Userojbect
+}
 declare global {
   interface Window {
     api: {
@@ -21,6 +25,7 @@ declare global {
         //new user
         create: (user: user) => Promise<ApiResponse_nval>
         login: (user: user) => Promise<ApiResponse_user>
+        getallprofiles: () => Promise<Apireponse_notxt>
       }
     }
   }

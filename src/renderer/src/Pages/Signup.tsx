@@ -10,16 +10,29 @@ export default function Signup(): React.JSX.Element {
   const navigate = useNavigate()
   /** no need to check input if he gonna be dumb do bad input we will just simply put as it is */
   const creating = async (): Promise<void> => {
-    const result = await window.api.user.create({ name: user, password, age })
-    if (!result.success) {
-      setMessage(result.message)
-    } else {
-      setMessage(result.message)
+    //before you make a call u need a fix data sent
+    const newuser = {
+      name: user.trim(),
+      password: password.trim(),
+      age: Number(age)
     }
-    setTimeout(() => {
-      setMessage('')
-      if (result.success) navigate('/')
-    }, 2000)
+    if (newuser.name.length > 3 && newuser.password.length > 6) {
+      const result = await window.api.user.create(newuser)
+      if (!result.success) {
+        setMessage(result.message)
+      } else {
+        setMessage(result.message)
+      }
+      setTimeout(() => {
+        setMessage('')
+        if (result.success) navigate('/')
+      }, 3000)
+    } else {
+      setMessage('Bad inputs try again')
+      setTimeout(() => {
+        setMessage('')
+      }, 3000)
+    }
   }
 
   return (
@@ -27,7 +40,7 @@ export default function Signup(): React.JSX.Element {
       <div className="w-85 border-2 border-[#808080] bg-[#eeeeee] p-4 shadow-[inset_1px_1px_0_#fff,inset_-1px_-1px_0_#777]">
         <div className="mb-4 flex items-center justify-between border border-[#808080] bg-[#0b3d91] px-2 py-1 text-sm font-bold text-white">
           <div className="flex items-center gap-2">
-            <span>System Sign Up</span>
+            <span>System new profile</span>
           </div>
         </div>
 
@@ -48,6 +61,9 @@ export default function Signup(): React.JSX.Element {
               onChange={(e) => setUser(e.target.value)}
               placeholder="Username"
               className="h-8 flex-1 border-2 border-[#808080] bg-white px-2 text-sm outline-none shadow-[inset_1px_1px_2px_#999] focus:border-[#0b3d91]"
+              minLength={3}
+              required
+              title="Username"
             />
           </div>
 
@@ -67,6 +83,9 @@ export default function Signup(): React.JSX.Element {
               onChange={(e) => setPassword(e.target.value)}
               placeholder="Password"
               className="h-8 flex-1 border-2 border-[#808080] bg-white px-2 text-sm outline-none shadow-[inset_1px_1px_2px_#999] focus:border-[#0b3d91]"
+              minLength={6}
+              required
+              title="Password"
             />
           </div>
 
@@ -85,6 +104,8 @@ export default function Signup(): React.JSX.Element {
               onChange={(e) => setAge(Number(e.target.value))}
               placeholder="Age"
               className="h-8 flex-1 border-2 border-[#808080] bg-white px-2 text-sm outline-none shadow-[inset_1px_1px_2px_#999] focus:border-[#0b3d91]"
+              required
+              title="Age"
             />
           </div>
 

@@ -55,19 +55,18 @@ function registerIpcHandlers(): void {
 //another function in main to handle login profile
 function loginIpchandlers(): void {
   ipcMain.handle('user:login', (_event, user: usertype) => {
-    try {
-      const one = loginUser(user)
-
+    const one = loginUser(user)
+    if (!one) {
       return {
         value: one,
-        success: true,
-        message: 'Succesfully logged in !'
-      }
-    } catch {
-      return {
         success: false,
-        message: 'Failed to log in !'
+        message: 'Invalid username or password'
       }
+    }
+
+    return {
+      success: true,
+      message: 'Logged in successful'
     }
   })
 }

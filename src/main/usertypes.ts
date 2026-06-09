@@ -3,3 +3,10 @@ export type usertype = {
   password: string
   age: number
 }
+export type Userojbect = {
+  id: number
+  username: string
+  password: string
+  age: number
+  created_at: string
+}

@@ -2,7 +2,7 @@ import { app } from 'electron'
 import path from 'node:path'
 import fs from 'node:fs'
 import Database from 'better-sqlite3'
-import type { usertype } from './usertypes'
+import type { usertype, Userojbect } from './usertypes'
 let db: Database.Database
 
 //creating full database and path
@@ -55,13 +55,6 @@ export function createUser(user: usertype): void {
 }
 
 //login with your profile in your pc
-type Userojbect = {
-  id: number
-  username: string
-  password: string
-  age: number
-  created_at: string
-}
 
 export function loginUser(user: usertype): Userojbect | undefined {
   const database = getDatabase()

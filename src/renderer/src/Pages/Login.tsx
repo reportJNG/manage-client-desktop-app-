@@ -3,29 +3,37 @@ import { useState } from 'react'
 import { LockKeyhole, User } from 'lucide-react'
 import { Link } from 'react-router-dom'
 export default function Login(): React.JSX.Element {
-  const validUser = 'admin'
-  const validPassword = '1234'
   const [user, setUser] = useState('')
   const [password, setPassword] = useState('')
   const [rememberUser, setRememberUser] = useState(false)
   const [message, setMessage] = useState('')
 
-  function compareUserAndPassword(): boolean {
-    return user.trim() === validUser && password === validPassword
-  }
-
-  function handleLogin(event: FormEvent<HTMLFormElement>): void {
+  const handleLogin = async (event: FormEvent<HTMLFormElement>): Promise<void> => {
     event.preventDefault()
 
-    if (compareUserAndPassword()) {
-      setMessage('Login successful.')
-    } else {
-      setMessage('Wrong user or password.')
-    }
+    const cleanname = user.trim()
+    const cleanpassword = password.trim()
 
+    const correct = cleanname.length >= 3 && cleanpassword.length >= 6
+
+    if (!correct) {
+      setMessage('Failed to login bad input')
+      setTimeout(() => {
+        setMessage('')
+      }, 3000)
+      setUser('')
+      setPassword('')
+      return
+    }
+    const result = await window.api.user.login({ name: user, password, age: 0 })
+    setMessage(result.message)
+    setUser('')
+    setPassword('')
     setTimeout(() => {
       setMessage('')
     }, 3000)
+    //here i wanna save his id and sent it to main
+    //const id = result.value?.id
   }
 
   return (

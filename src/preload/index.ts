@@ -1,6 +1,16 @@
-import { contextBridge } from 'electron'
+import { contextBridge, ipcRenderer } from 'electron'
 
-const api = {}
+//types
+import type { usertype } from '../main/usertypes'
+
+//all api calls
+const api = {
+  user: {
+    create: (user: usertype) => {
+      return ipcRenderer.invoke('user:create', user)
+    }
+  }
+}
 
 if (process.contextIsolated) {
   try {

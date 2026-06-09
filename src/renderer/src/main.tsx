@@ -1,9 +1,9 @@
 import { createRoot } from 'react-dom/client'
 import { HashRouter, Routes, Route } from 'react-router-dom'
-import Login from './Components/Login'
-import Signup from './Components/Signup'
+import Login from './Pages/Login'
+import Signup from './Pages/Signup'
 import './assets/global.css'
-import Forgetpassword from './Components/Forgetpassword'
+import Forgetpassword from './Pages/Forgetpassword'
 
 export default function App(): React.JSX.Element {
   return (

@@ -2,7 +2,7 @@ import { app, shell, BrowserWindow, ipcMain } from 'electron'
 import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
-import { initDatabase, createUser } from './database'
+import { initDatabase, createUser, loginUser } from './database'
 import type { usertype } from './usertypes'
 
 function createWindow(): void {
@@ -52,12 +52,31 @@ function registerIpcHandlers(): void {
     }
   })
 }
+//another function in main to handle login profile
+function loginIpchandlers(): void {
+  ipcMain.handle('user:login', (_event, user: usertype) => {
+    try {
+      const one = loginUser(user)
 
+      return {
+        value: one,
+        success: true,
+        message: 'Succesfully logged in !'
+      }
+    } catch {
+      return {
+        success: false,
+        message: 'Failed to log in !'
+      }
+    }
+  })
+}
 app.whenReady().then(() => {
   electronApp.setAppUserModelId('com.desktop.loginapp')
 
   initDatabase()
   registerIpcHandlers()
+  loginIpchandlers()
 
   app.on('browser-window-created', (_, window) => {
     optimizer.watchWindowShortcuts(window)

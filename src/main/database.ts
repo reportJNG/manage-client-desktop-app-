@@ -5,6 +5,7 @@ import Database from 'better-sqlite3'
 import type { usertype } from './usertypes'
 let db: Database.Database
 
+//creating full database and path
 export function initDatabase(): Database.Database {
   const appPath = path.join(app.getPath('userData'), 'client-mgr')
 
@@ -22,6 +23,7 @@ export function initDatabase(): Database.Database {
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       username TEXT NOT NULL UNIQUE,
       password TEXT NOT NULL,
+      age NUMBER NOT NULL,
       created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
     )
   `
@@ -38,15 +40,37 @@ export function getDatabase(): Database.Database {
   return db
 }
 
+//create profile in pc
 export function createUser(user: usertype): void {
   const database = getDatabase()
 
   database
     .prepare(
       `
-      INSERT INTO users (username, password)
-      VALUES (?, ?)
+      INSERT INTO users (username, password,age)
+      VALUES (?,?,?)
     `
     )
-    .run(user.name, user.password)
+    .run(user.name, user.password, user.age)
+}
+
+//login with your profile in your pc
+type Userojbect = {
+  id: number
+  username: string
+  password: string
+  age: number
+  created_at: string
+}
+
+export function loginUser(user: usertype): Userojbect | undefined {
+  const database = getDatabase()
+  const finduser = database
+    .prepare(
+      `
+      SELECT * FROM users WHERE username=? AND password = ?
+    `
+    )
+    .get(user.name, user.password) as Userojbect | undefined
+  return finduser
 }

@@ -8,6 +8,9 @@ const api = {
   user: {
     create: (user: usertype) => {
       return ipcRenderer.invoke('user:create', user)
+    },
+    login: (user: usertype) => {
+      return ipcRenderer.invoke('user:login', user)
     }
   }
 }

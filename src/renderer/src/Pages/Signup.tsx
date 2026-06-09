@@ -5,34 +5,47 @@ import { Link, useNavigate } from 'react-router-dom'
 export default function Signup(): React.JSX.Element {
   const [user, setUser] = useState<string>('')
   const [password, setPassword] = useState<string>('')
-  const [age, setAge] = useState<number>(0)
+  const [age, setAge] = useState<number>(18)
   const [message, setMessage] = useState<string>('')
   const navigate = useNavigate()
   /** no need to check input if he gonna be dumb do bad input we will just simply put as it is */
-  const creating = async (): Promise<void> => {
-    //before you make a call u need a fix data sent
+  const creating = async (event: React.FormEvent<HTMLFormElement>): Promise<void> => {
+    event.preventDefault()
     const newuser = {
       name: user.trim(),
       password: password.trim(),
       age: Number(age)
     }
-    if (newuser.name.length > 3 && newuser.password.length > 6) {
-      const result = await window.api.user.create(newuser)
-      if (!result.success) {
-        setMessage(result.message)
-      } else {
-        setMessage(result.message)
-      }
-      setTimeout(() => {
-        setMessage('')
-        if (result.success) navigate('/')
-      }, 3000)
-    } else {
+
+    const isValidName = newuser.name.length >= 3
+    const isValidPassword = newuser.password.length >= 6
+    const isValidAge = Number.isFinite(newuser.age) && newuser.age > 0
+
+    if (!isValidName || !isValidPassword || !isValidAge) {
       setMessage('Bad inputs try again')
+      setAge(0)
+      setUser('')
+      setPassword('')
       setTimeout(() => {
         setMessage('')
       }, 3000)
+
+      return
     }
+
+    const result = await window.api.user.create(newuser)
+
+    setMessage(result.message)
+    setAge(18)
+    setUser('')
+    setPassword('')
+    setTimeout(() => {
+      setMessage('')
+
+      if (result.success) {
+        navigate('/')
+      }
+    }, 3000)
   }
 
   return (
@@ -109,18 +122,22 @@ export default function Signup(): React.JSX.Element {
             />
           </div>
 
-          <div className="mt-5 flex items-center justify-center gap-1 text-sm text-slate-600">
-            <span>Already have an account?</span>
-            <Link
-              to="/"
-              className="font-semibold text-blue-900 underline-offset-4 transition hover:text-blue-700 hover:underline"
-            >
-              Login here
-            </Link>
-            {/**message */}
-            <div>{message}</div>
+          <div className="mt-5 flex flex-col items-center justify-center gap-2 text-sm">
+            <div className="flex items-center justify-center gap-1 text-slate-600">
+              <span>Already have an account?</span>
+              <Link
+                to="/"
+                className="font-semibold text-blue-900 underline-offset-4 transition hover:text-blue-700 hover:underline"
+              >
+                Login here
+              </Link>
+            </div>
           </div>
-
+          {message !== '' && (
+            <div className="border border-[#808080] bg-white px-2 py-1 text-xs text-slate-700">
+              {message}
+            </div>
+          )}
           <button
             type="submit"
             className="mt-4 h-8 w-full border-2 border-[#808080] bg-[#dddddd] text-sm font-bold shadow-[inset_1px_1px_0_#fff,inset_-1px_-1px_0_#777] active:shadow-[inset_-1px_-1px_0_#fff,inset_1px_1px_0_#777]"

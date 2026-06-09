@@ -3,12 +3,7 @@ import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
 import { initDatabase, createUser } from './database'
-
-type CreateUserInput = {
-  username: string
-  password: string
-  age: number
-}
+import type { usertype } from './usertypes'
 
 function createWindow(): void {
   const mainWindow = new BrowserWindow({
@@ -41,7 +36,7 @@ function createWindow(): void {
 
 //one function here to handle creating profiles
 function registerIpcHandlers(): void {
-  ipcMain.handle('user:create', (_event, user: CreateUserInput) => {
+  ipcMain.handle('user:create', (_event, user: usertype) => {
     try {
       createUser(user)
 

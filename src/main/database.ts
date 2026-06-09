@@ -2,13 +2,8 @@ import { app } from 'electron'
 import path from 'node:path'
 import fs from 'node:fs'
 import Database from 'better-sqlite3'
-
+import type { usertype } from './usertypes'
 let db: Database.Database
-
-type CreateUserInput = {
-  username: string
-  password: string
-}
 
 export function initDatabase(): Database.Database {
   const appPath = path.join(app.getPath('userData'), 'client-mgr')
@@ -43,7 +38,7 @@ export function getDatabase(): Database.Database {
   return db
 }
 
-export function createUser(user: CreateUserInput): void {
+export function createUser(user: usertype): void {
   const database = getDatabase()
 
   database
@@ -53,5 +48,5 @@ export function createUser(user: CreateUserInput): void {
       VALUES (?, ?)
     `
     )
-    .run(user.username, user.password)
+    .run(user.name, user.password)
 }

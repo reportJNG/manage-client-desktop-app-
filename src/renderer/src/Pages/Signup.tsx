@@ -1,14 +1,26 @@
 import { Calendar, Lock, User } from 'lucide-react'
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 export default function Signup(): React.JSX.Element {
   const [user, setUser] = useState<string>('')
   const [password, setPassword] = useState<string>('')
-  const [age, setAge] = useState<string>('')
-
+  const [age, setAge] = useState<number>(0)
+  const [message, setMessage] = useState<string>('')
+  const navigate = useNavigate()
   /** no need to check input if he gonna be dumb do bad input we will just simply put as it is */
-  const creating = (): void => {}
+  const creating = async (): Promise<void> => {
+    const result = await window.api.user.create({ name: user, password, age })
+    if (!result.success) {
+      setMessage(result.message)
+    } else {
+      setMessage(result.message)
+    }
+    setTimeout(() => {
+      setMessage('')
+      if (result.success) navigate('/')
+    }, 2000)
+  }
 
   return (
     <main className="flex min-h-screen items-center justify-center bg-[#c0c0c0] p-4 text-[#111]">
@@ -70,7 +82,7 @@ export default function Signup(): React.JSX.Element {
               name="age"
               type="number"
               value={age}
-              onChange={(e) => setAge(e.target.value)}
+              onChange={(e) => setAge(Number(e.target.value))}
               placeholder="Age"
               className="h-8 flex-1 border-2 border-[#808080] bg-white px-2 text-sm outline-none shadow-[inset_1px_1px_2px_#999] focus:border-[#0b3d91]"
             />
@@ -84,6 +96,8 @@ export default function Signup(): React.JSX.Element {
             >
               Login here
             </Link>
+            {/**message */}
+            <div>{message}</div>
           </div>
 
           <button

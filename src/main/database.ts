@@ -68,5 +68,15 @@ export function loginUser(user: usertype): Userojbect | undefined {
   return finduser
 }
 //get all profiles
-
+export default function Getallprofiles(): Userojbect[] | undefined {
+  const database = getDatabase()
+  const users = database
+    .prepare(
+      `
+      SELECT * FROM users 
+    `
+    )
+    .all() as Userojbect[] | undefined
+  return users
+}
 //change password of this profile id

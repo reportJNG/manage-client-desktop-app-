@@ -2,7 +2,7 @@ import { app } from 'electron'
 import path from 'node:path'
 import fs from 'node:fs'
 import Database from 'better-sqlite3'
-import type { usertype, Userojbect } from './usertypes'
+import type { usertype, Userojbect } from '../shared/usertypes'
 let db: Database.Database
 
 //creating full database and path
@@ -67,3 +67,6 @@ export function loginUser(user: usertype): Userojbect | undefined {
     .get(user.name, user.password) as Userojbect | undefined
   return finduser
 }
+//get all profiles
+
+//change password of this profile id

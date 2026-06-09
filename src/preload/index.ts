@@ -1,7 +1,7 @@
 import { contextBridge, ipcRenderer } from 'electron'
 
 //types
-import type { usertype } from '../main/usertypes'
+import type { usertype } from '../shared/usertypes'
 
 //all api calls
 const api = {

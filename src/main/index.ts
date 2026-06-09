@@ -3,7 +3,7 @@ import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
 import { initDatabase, createUser, loginUser } from './database'
-import type { usertype } from './usertypes'
+import type { usertype } from '../shared/usertypes'
 
 function createWindow(): void {
   const mainWindow = new BrowserWindow({

@@ -1,5 +1,5 @@
 export {}
-import type { Userojbect } from '../../../main/usertypes'
+import type { Userojbect } from '../../../shared/usertypes'
 type user = {
   name: string
   password: string

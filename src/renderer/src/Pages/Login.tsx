@@ -59,6 +59,9 @@ export default function Login(): React.JSX.Element {
               value={user}
               onChange={(event) => setUser(event.target.value)}
               placeholder="User"
+              required
+              minLength={3}
+              title="Name"
               className="h-8 flex-1 border-2 border-[#808080] bg-white px-2 text-sm outline-none shadow-[inset_1px_1px_2px_#999] focus:border-[#0b3d91]"
             />
           </div>
@@ -78,6 +81,9 @@ export default function Login(): React.JSX.Element {
               value={password}
               onChange={(event) => setPassword(event.target.value)}
               placeholder="Password"
+              required
+              minLength={6}
+              title="Password"
               className="h-8 flex-1 border-2 border-[#808080] bg-white px-2 text-sm outline-none shadow-[inset_1px_1px_2px_#999] focus:border-[#0b3d91]"
             />
           </div>
@@ -94,7 +100,7 @@ export default function Login(): React.JSX.Element {
             </label>
 
             <Link
-              to="/forgetpassword"
+              to="/profiles"
               className="font-medium text-blue-900 underline-offset-4 transition hover:text-blue-700 hover:underline"
             >
               Forgot password?

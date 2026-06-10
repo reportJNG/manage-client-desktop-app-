@@ -16,7 +16,7 @@ type ApiResponse_user = {
 }
 type Apireponse_notxt = {
   success: boolean
-  value: Userojbect
+  value: Userojbect[]
 }
 declare global {
   interface Window {

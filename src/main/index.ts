@@ -3,7 +3,7 @@ import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
 import Getallprofiles, { initDatabase, createUser, loginUser } from './database'
-import type { usertype } from '../shared/usertypes'
+import type { Userojbect, usertype } from '../shared/usertypes'
 
 function createWindow(): void {
   const mainWindow = new BrowserWindow({
@@ -81,7 +81,7 @@ function getallUsersIpchandlers(): void {
       }
     } else {
       return {
-        value: allusers,
+        value: allusers as Userojbect[],
         success: true
       }
     }

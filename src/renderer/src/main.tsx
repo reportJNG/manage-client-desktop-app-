@@ -3,7 +3,7 @@ import { HashRouter, Routes, Route } from 'react-router-dom'
 import Login from './Pages/Login'
 import Signup from './Pages/Signup'
 import './assets/global.css'
-import Changepassword from './Pages/Changepassword'
+import Profiles from './Pages/Profiles'
 
 export default function App(): React.JSX.Element {
   return (
@@ -11,7 +11,7 @@ export default function App(): React.JSX.Element {
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
-        <Route path="/changepassword" element={<Changepassword />} />
+        <Route path="/profiles" element={<Profiles />} />
       </Routes>
     </HashRouter>
   )

@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { ArrowLeft, User, Lock, KeyRound } from 'lucide-react'
-
+import { useNavigate } from 'react-router-dom'
 interface Newpasswordprofileprops {
   name: string
   id: number
@@ -12,14 +12,36 @@ export default function Newpasswordprofile({
   id,
   setNext
 }: Newpasswordprofileprops): React.JSX.Element {
+  const navigate = useNavigate()
   const [newpassword, setNewPassword] = useState<string>('')
   const [message, setMessage] = useState<string>('')
   const changepassword = async (): Promise<void> => {
     if (newpassword.trim().length < 6) {
       setMessage('Bad input !')
       setNewPassword('')
+      setTimeout(() => {
+        setMessage('')
+      }, 3000)
+      return
     } else {
-      setMessage('Successfuly Updated !')
+      const result = await window.api.user.updateuserpassw({
+        password: newpassword,
+        id: Number(id)
+      })
+      if (!result.success) {
+        setMessage('Failed to update password')
+        setTimeout(() => {
+          setMessage('')
+          return
+        }, 3000)
+      } else {
+        setMessage('Successfully updated password')
+        setTimeout(() => {
+          setMessage('')
+          navigate('/')
+          return
+        }, 3000)
+      }
     }
 
     setTimeout(() => {

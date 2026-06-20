@@ -1,5 +1,5 @@
 export {}
-import type { Userojbect } from '../../../shared/usertypes'
+import type { updatepss, Userojbect } from '../../../shared/usertypes'
 type user = {
   name: string
   password: string
@@ -26,6 +26,7 @@ declare global {
         create: (user: user) => Promise<ApiResponse_nval>
         login: (user: user) => Promise<ApiResponse_user>
         getallprofiles: () => Promise<Apireponse_notxt>
+        updateuserpassw: ({ password, id }: updatepss) => Promise<ApiResponse_nval>
       }
     }
   }

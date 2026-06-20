@@ -2,7 +2,7 @@ import { app } from 'electron'
 import path from 'node:path'
 import fs from 'node:fs'
 import Database from 'better-sqlite3'
-import type { usertype, Userojbect } from '../shared/usertypes'
+import type { usertype, Userojbect, updatepss } from '../shared/usertypes'
 let db: Database.Database
 
 //creating full database and path
@@ -68,7 +68,7 @@ export function loginUser(user: usertype): Userojbect | undefined {
   return finduser
 }
 //get all profiles
-export default function Getallprofiles(): Userojbect[] | undefined {
+export function Getallprofiles(): Userojbect[] | undefined {
   const database = getDatabase()
   const users = database
     .prepare(
@@ -80,3 +80,12 @@ export default function Getallprofiles(): Userojbect[] | undefined {
   return users
 }
 //change password of this profile id
+export function Updatepassword({ password, id }: updatepss): boolean {
+  const database = getDatabase()
+  const call = database.prepare(`
+  UPDATE users
+  SET password = ${password}
+  WHERE id = ${id};`)
+  if (!call) return false
+  return true
+}

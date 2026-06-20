@@ -2,8 +2,8 @@ import { app, shell, BrowserWindow, ipcMain } from 'electron'
 import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
-import Getallprofiles, { initDatabase, createUser, loginUser } from './database'
-import type { Userojbect, usertype } from '../shared/usertypes'
+import { initDatabase, createUser, loginUser, Updatepassword, Getallprofiles } from './database'
+import type { updatepss, Userojbect, usertype } from '../shared/usertypes'
 
 function createWindow(): void {
   const mainWindow = new BrowserWindow({
@@ -87,6 +87,21 @@ function getallUsersIpchandlers(): void {
     }
   })
 }
+//another function for updater password
+function Userupdatepassword(): void {
+  ipcMain.handle('user:passupdate', (_event, { password, id }: updatepss) => {
+    const updating = Updatepassword({ password, id })
+    if (!updating) {
+      return {
+        success: false
+      }
+    }
+    return {
+      success: true,
+      message: 'User Updated seccessfully !'
+    }
+  })
+}
 app.whenReady().then(() => {
   electronApp.setAppUserModelId('com.desktop.loginapp')
 
@@ -94,6 +109,7 @@ app.whenReady().then(() => {
   registerIpcHandlers()
   loginIpchandlers()
   getallUsersIpchandlers()
+  Userupdatepassword()
   app.on('browser-window-created', (_, window) => {
     optimizer.watchWindowShortcuts(window)
   })

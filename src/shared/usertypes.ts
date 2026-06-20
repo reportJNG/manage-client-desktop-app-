@@ -10,3 +10,7 @@ export type Userojbect = {
   age: number
   created_at: string
 }
+export type updatepss = {
+  password: string
+  id: number
+}

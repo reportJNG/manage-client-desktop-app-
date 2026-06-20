@@ -14,6 +14,9 @@ const api = {
     },
     getallprofiles: () => {
       return ipcRenderer.invoke('user:getall')
+    },
+    updatepassword: () => {
+      return ipcRenderer.invoke('user:passupdate')
     }
   }
 }

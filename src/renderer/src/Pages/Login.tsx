@@ -1,13 +1,16 @@
 import type { FormEvent } from 'react'
 import { useState } from 'react'
 import { LockKeyhole, User } from 'lucide-react'
-import { Link } from 'react-router-dom'
-export default function Login(): React.JSX.Element {
+import { Link, useNavigate } from 'react-router-dom'
+interface loginprops {
+  onLogin: (name: string) => void
+}
+export default function Login({ onLogin }: loginprops): React.JSX.Element {
   const [user, setUser] = useState('')
   const [password, setPassword] = useState('')
   const [rememberUser, setRememberUser] = useState(false)
   const [message, setMessage] = useState('')
-
+  const navigate = useNavigate()
   const handleLogin = async (event: FormEvent<HTMLFormElement>): Promise<void> => {
     event.preventDefault()
 
@@ -29,11 +32,12 @@ export default function Login(): React.JSX.Element {
     setMessage(result.message)
     setUser('')
     setPassword('')
+    //here i wanna save his id and sent it to main
+    onLogin(user)
     setTimeout(() => {
       setMessage('')
+      navigate('/home')
     }, 3000)
-    //here i wanna save his id and sent it to main
-    //const id = result.value?.id
   }
 
   return (

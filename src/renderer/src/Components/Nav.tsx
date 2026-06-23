@@ -21,7 +21,7 @@ export default function Nav(): React.JSX.Element {
     { path: '/reports', icon: BarChart3, label: 'Reports' },
     { path: '/profile', icon: UserCircle, label: 'Profile' },
     { path: '/settings', icon: Settings, label: 'Settings' },
-    { path: '/profiles', icon: DoorOpenIcon, label: 'Logout' }
+    { path: '/', icon: DoorOpenIcon, label: 'Logout' }
   ]
 
   return (

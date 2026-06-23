@@ -28,16 +28,25 @@ export default function Login({ onLogin }: loginprops): React.JSX.Element {
       setPassword('')
       return
     }
-    const result = await window.api.user.login({ name: user, password, age: 0 })
-    setMessage(result.message)
-    setUser('')
-    setPassword('')
-    //here i wanna save his id and sent it to main
-    onLogin(user)
-    setTimeout(() => {
-      setMessage('')
-      navigate('/home')
-    }, 3000)
+    try {
+      const result = await window.api.user.login({ name: user, password, age: 0 })
+      setMessage(result.message)
+      setUser('')
+      setPassword('')
+      if (!result.success) {
+        setTimeout(() => {
+          setMessage('')
+          return
+        }, 3000)
+      }
+      //here i wanna save his id and sent it to main
+      onLogin(user)
+    } catch {
+      setTimeout(() => {
+        setMessage('')
+        navigate('/home')
+      }, 3000)
+    }
   }
 
   return (
